@@ -137,10 +137,17 @@ def devNetwork(argv):
         for batchIdx, batchDate in enumerate(batch_dates):
             print('debug 5 - batchIdx - ', batchIdx)
             # get combined author lists
-            combined_authors_in_batch = (
-                pr_participant_batches[batchIdx] +
-                (issue_participant_batches[batchIdx] if batchIdx < len(issue_participant_batches) else [])
-            )
+            # combined_authors_in_batch = (
+            #     pr_participant_batches[batchIdx] +
+            #     (issue_participant_batches[batchIdx] if batchIdx < len(issue_participant_batches) else [])
+            # )
+            combined_authors_in_batch = ( 
+                (pr_participant_batches[batchIdx] 
+                 if batchIdx < len(pr_participant_batches) 
+                 else []) + (issue_participant_batches[batchIdx] 
+                             if batchIdx < len(issue_participant_batches) 
+                             else []) 
+                )
             print('debug 6 - batchIdx - ', batchIdx)
             # build combined network
             centrality.build_graph_ql_network(
@@ -151,9 +158,15 @@ def devNetwork(argv):
             )
             print('debug 7 - batchIdx - ', batchIdx)
             # get combined unique authors for both PRs and issues
-            unique_authors_in_pr_batch = set(
-                author for pr in pr_participant_batches[batchIdx] for author in pr
-            )
+            # unique_authors_in_pr_batch = set(
+            #     author for pr in pr_participant_batches[batchIdx] for author in pr
+            # )
+
+            unique_authors_in_pr_batch = set( 
+                author for pr in (pr_participant_batches[batchIdx] 
+                                  if batchIdx < len(pr_participant_batches) 
+                                  else []) for author in pr )
+
             # issue_comment_batch = list([len(c) for c in issue_comment_batches[batch_idx]]) if batch_idx < len(issue_comment_batches) else []
             print('debug 8 - batchIdx - ', batchIdx)
             unique_authors_in_issue_batch = set(
@@ -165,7 +178,8 @@ def devNetwork(argv):
             )
             print('debug 10 - batchIdx - ', batchIdx)
             # get batch core team
-            batch_core_devs = core_devs[batchIdx]
+            # batch_core_devs = core_devs[batchIdx]
+            batch_core_devs = core_devs[batchIdx] if batchIdx < len(core_devs) else []
             print('debug 11 - batchIdx - ', batchIdx)
             # run dev analysis
             devAnalysis(
@@ -177,7 +191,7 @@ def devNetwork(argv):
             )
             print('debug 12 - batchIdx - ', batchIdx)
             # run smell detection
-            detected_smells = smell_detection(config, batchIdx)[1:]
+            detected_smells = smell_detection(config, batchIdx)
             print('debug 13 - batchIdx - ', batchIdx)
             # building a dictionary of detected community smells for each batch analyzed
             result["Index"] = batchIdx

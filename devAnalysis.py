@@ -23,7 +23,8 @@ def devAnalysis(
     number_active_experienced_devs = len(devs.intersection(set(experienced_devs)))
 
     # calculate bus factor
-    bus_factor = (len(devs) - len(coreDevs)) / len(devs)
+        # bus_factor = (len(devs) - len(coreDevs)) / len(devs)
+    bus_factor = (len(devs) - len(coreDevs)) / len(devs) if len(devs) > 0 else 0
 
     # calculate TFC
     commit_count = sum(

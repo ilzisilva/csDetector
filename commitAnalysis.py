@@ -79,7 +79,8 @@ def commit_analysis(
             # Verificar se este mês ainda está dentro do delta do batch atual
             months_diff = (year - current_batch_start.year) * 12 + (month - current_batch_start.month)
             
-            if months_diff < delta.months:
+            # if months_diff < delta.months:
+            if months_diff < delta.years * 12 + delta.months:
                 # Ainda dentro do mesmo batch - adicionar commits
                 current_batch.extend(month_commits)
             else:

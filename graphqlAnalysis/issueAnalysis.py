@@ -256,7 +256,8 @@ def analyzeSentiments(
             positiveComments.append(commentSentimentsPositive)
             negativeComments.append(commentSentimentsNegative)
 
-            if commentSentimentsNegative / len(comments) > 0.5:
+            # if commentSentimentsNegative / len(comments) > 0.5:
+            if len(comments) > 0 and commentSentimentsNegative / len(comments) > 0.5:
                 generallyNegative.append(True)
 
             print(f".", end="")
@@ -341,7 +342,8 @@ def issueRequest(
 
 
 def buildIssueRequestQuery(owner: str, name: str, cursor: str, pat: str):
-    first_amount = '100' if within_node_limit(owner, name, pat) else '50'
+   # first_amount = '100' if within_node_limit(owner, name, pat) else '50'
+    first_amount = '20' 
 
     return """{{
         repository(owner: "{0}", name: "{1}") {{

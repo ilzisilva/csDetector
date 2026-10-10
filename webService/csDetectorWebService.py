@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/workspaces/csDetector')
+sys.path.append('/app')
 
 from csDetectorAdapter import CsDetectorAdapter
 from flask import jsonify, request, send_file, render_template, url_for, redirect

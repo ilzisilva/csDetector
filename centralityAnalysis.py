@@ -152,16 +152,19 @@ def prepare_graph(
 
     number_high_centrality_authors = len(high_centrality_authors)
 
-    percentage_high_centrality_authors = number_high_centrality_authors / len(
-        all_related_authors
-    )
+    # percentage_high_centrality_authors = number_high_centrality_authors / len(
+    #     all_related_authors
+    # )
+    percentage_high_centrality_authors = ( number_high_centrality_authors / len(all_related_authors) if len(all_related_authors) > 0 else 0 )
 
     # calculate TFN
     tfn = len(author_items) - number_high_centrality_authors
 
     # calculate TFC
-    tfc = sum(author_items[author]
-              for author in high_centrality_authors) / sum(author_items.values()) * 100
+        # tfc = sum(author_items[author]
+        #           for author in high_centrality_authors) / sum(author_items.values()) * 100
+    _total_commits = sum(author_items.values()) 
+    tfc = ( sum(author_items[author] for author in high_centrality_authors) / _total_commits * 100 if _total_commits > 0 else 0 )
 
     logger.info("Outputting CSVs")
 
